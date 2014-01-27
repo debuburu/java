@@ -2,6 +2,7 @@ package othello;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -9,14 +10,18 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import othello.Grid.State;
+
 public class Board extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final int GRID_NUM = 8;
 	private final int GRID_SIZE = 30;
 	private Grid[][] gridArray = new Grid[GRID_NUM][GRID_NUM];
+	private BoardListener owner;
 
-	public Board(String title) {
+	public Board(String title, BoardListener owner) {
 		super(title);
+		this.owner = owner;
 
 		//サイズ変更禁止
 		setResizable(false);
@@ -56,14 +61,28 @@ public class Board extends JFrame {
 		});
 	}
 	
+	public Grid.State getGrid(Point p) {
+		return gridArray[p.x][p.y].getState();
+	}
+	
 	public void clicked(int x, int y) {
 		System.out.println("clicked." + x + ", " + y);
-		gridArray[x / GRID_SIZE][(y - GRID_SIZE) / GRID_SIZE].change(Grid.State.White);
+		Point p = new Point(x / GRID_SIZE, (y - GRID_SIZE) / GRID_SIZE);
+		owner.click(p);
+//		gridArray[x / GRID_SIZE][(y - GRID_SIZE) / GRID_SIZE].change(Grid.State.White);
+	}
+	
+	public void clicked(Point p, Color color) {
+		gridArray[p.x][p.y].change(color);
 	}
 
-	public static void main(String[] args) {
-		Board board = new Board("オセロワールド");
-		board.setVisible(true);
+	public void reverse(Point p) {
+		gridArray[p.x][p.y].reverse();
 	}
+
+//	public static void main(String[] args) {
+//		Board board = new Board("オセロワールド");
+//		board.setVisible(true);
+//	}
 
 }

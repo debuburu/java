@@ -39,6 +39,26 @@ public class Grid extends JPanel {
 	public State getState() {
 		return state;
 	}
+
+	public void reverse() {
+		if(state == State.Black) {
+			state = State.White;
+		} else {
+			state = State.Black;
+		}
+		repaint();
+	}
+
+	public void change(Color color) {
+		if(color == Color.BLACK) {
+			state = State.Black;
+		} else if(color == Color.WHITE) {
+			state = State.White;
+		} else {
+			//TODO エラー処理
+		}
+		repaint();
+	}
 	
 	public void change(State state) {
 		this.state = state;
