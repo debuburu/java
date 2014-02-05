@@ -13,9 +13,9 @@ public class Grid extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	enum State {
-		None(null),
 		White(Color.WHITE),
-		Black(Color.BLACK);
+		Black(Color.BLACK),
+		None(null);
 		
 		private Color color;
 		
